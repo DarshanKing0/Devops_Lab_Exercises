@@ -1,0 +1,54 @@
+Started by user unknown or anonymous
+Obtained A9_MultiStagePipeline/Jenkinsfile from git https://github.com/DarshanKing0/devops_lab.git
+
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/Python-MultiStage-Pipeline
+
+[Pipeline] stage
+[Pipeline] { (Build)
+Installing dependencies...
+Successfully installed Werkzeug-2.1.2
+[Pipeline] }
+
+[Pipeline] stage
+[Pipeline] { (Test)
+Running unit tests...
+
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.076s
+
+OK
+Hello, Jenkins Multi-Stage Pipeline!
+[Pipeline] }
+
+[Pipeline] stage
+[Pipeline] { (Deploy)
+Deploying application...
+[Pipeline] }
+
+[Pipeline] stage
+[Pipeline] { (Run Application)
+Running application...
+ * Serving Flask app 'app'
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000
+[Pipeline] }
+
+[Pipeline] stage
+[Pipeline] { (Test Application)
+Testing deployed application...
+
+HTTP Status: 200
+Response: Hello, Jenkins Multi-Stage Pipeline!
+Application test passed!
+[Pipeline] }
+
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+Pipeline completed successfully!
+[Pipeline] }
+
+[Pipeline] End of Pipeline
+Finished: SUCCESS

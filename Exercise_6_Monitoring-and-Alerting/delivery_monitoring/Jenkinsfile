@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Pre-check Docker') {
+            steps {
+                sh 'docker --version'
+                sh 'docker info'
+            }
+        }
+
+        stage('Setup Workspace') {
+            steps {
+                sh 'cp /project/Dockerfile .'
+                sh 'cp /project/delivery_metrics.py .'
+                sh 'ls -la'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t delivery-monitoring .'
+            }
+        }
+
+        stage('Run Application') {
+            steps {
+                sh 'docker rm -f delivery-monitoring-jenkins || true'
+                sh 'docker run -d --name delivery-monitoring-jenkins -p 8001:8000 delivery-monitoring'
+            }
+        }
+
+        stage('Verify Application') {
+            steps {
+                sh 'sleep 3'
+                sh 'curl -f http://localhost:8001/metrics'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker ps'
+        }
+    }
+}
